@@ -13,7 +13,7 @@ For Example if we have a field key1 (indexed as B, explained later) with a list 
 | D | a rare value|
 
 
-To represent "key1: another bigger value", we can just use 2 characters, "BC". Because we encode to indexes rather than value, the encoded string does not grow with size of the value. If "another bigger value" was a far bigger string, it would still be represented as "BC".
+To represent "key1: another bigger value", we can just use 2 characters, "BC". If "another bigger value" was a far bigger string, it would still be represented as "BC".
 
 This article explains the underlying concept well.
 https://www.linkedin.com/pulse/building-stateless-systems-minified-tokens-anuj-kapoor/
@@ -28,7 +28,7 @@ We need to follow few rules :-
   
 
 **Step 1: Create your classes for different token blocks**
-Token blocks goes in token package, the classes Maestro_A, Orchestra_A, Player_A and Symphony_A have been provided as a template. Whent you create your own token block version class, make sure to extend Token class.
+Token blocks goes in token package, the classes Maestro_A, Orchestra_A, Player_A and Symphony_A have been provided as a template. When you create your own token block version class, make sure to extend Token class.
 
 
 ``` public class TokenBlock_version extends Token {```
@@ -73,6 +73,10 @@ In util.VersionManager, create a list of token blocks, that form your token and 
 For Example:-
 
 Here we create a token containing 4 blocks, Player_A, Orchestra_A, Symphony_A and Maestro_A. Then we assign a version 'A' in versions.put statement. You can use any chracter from UrlSafeChar.java, to get a url safe character for your version.
+This system can support upto 65 different version at a time. When you use all 65 characters for version, you may consider to start re-using older versions. if you want to support more versions at a time, you may use more characters for versions. 
+	- Using 1 character you can support 65 versions.
+	- Using 2 characters you can support 4225 (65^2) different versions, at a given time.
+	- using 3 characters you can support 274,625 (65^3) different versions, at a given time.
 
 ```
 public class VersionManager {
